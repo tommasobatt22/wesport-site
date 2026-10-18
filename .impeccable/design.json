@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T10:58:26Z",
+  "title": "Design System: A.S.D. WE SPORT",
+  "extensions": {
+    "colorMeta": {
+      "signal-teal": {
+        "role": "primary",
+        "displayName": "Signal Teal",
+        "canonical": "#00a6b2",
+        "tonalRamp": ["#00282b", "#004b50", "#006d75", "#00909a", "#00a6b2", "#2ecbd4", "#7fdfe6", "#cdf3f5"]
+      },
+      "near-black": {
+        "role": "neutral",
+        "displayName": "Near-Black",
+        "canonical": "#1d1d1b",
+        "tonalRamp": ["#000000", "#0d0d0c", "#1d1d1b", "#2e2e2b", "#45453f", "#656557", "#8c8c76", "#c4c4a8"]
+      },
+      "charcoal-surface": {
+        "role": "neutral",
+        "displayName": "Charcoal Surface",
+        "canonical": "#262624",
+        "tonalRamp": ["#040403", "#141412", "#262624", "#393935", "#545450", "#78786f", "#a3a396", "#d6d6bf"]
+      },
+      "pure-white": {
+        "role": "neutral",
+        "displayName": "Pure White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#1d1d1b", "#45453f", "#78786f", "#a3a396", "#c4c4a8", "#e0e0cc", "#f2f2e8", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero h1 only." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (chi siamo, discipline, per chi, contatti, valori)." },
+      "title": { "displayName": "Title", "purpose": "Card and value headings." },
+      "body": { "displayName": "Body", "purpose": "All paragraph copy." },
+      "label": { "displayName": "Label", "purpose": "Eyebrow kickers and the footer association name." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "wave-drift", "value": "1s linear both, translateX/translateY ±40-80px with slight rotate", "purpose": "Scroll-driven decorative wave motifs defined in global.css (.wave/.wv-*); currently defined but not yet placed in any component — not part of the active rendered system." }
+    ],
+    "breakpoints": [
+      { "name": "nav-collapse", "value": "700px" },
+      { "name": "type-step", "value": "900px" },
+      { "name": "compact", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default call-to-action pill button.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Scopri le discipline</a>",
+      "css": ".ds-btn-primary { display: inline-block; padding: 16px 32px; border-radius: 999px; background: #00a6b2; color: #1d1d1b; font-weight: 500; font-family: Outfit, sans-serif; } .ds-btn-primary:hover { filter: brightness(1.1); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary pill button with outline only.",
+      "html": "<a href=\"#\" class=\"ds-btn-ghost\">Contattaci</a>",
+      "css": ".ds-btn-ghost { display: inline-block; padding: 14px 30px; border-radius: 999px; background: transparent; border: 1.5px solid #ffffff; color: #ffffff; font-weight: 500; font-family: Outfit, sans-serif; } .ds-btn-ghost:hover { color: #00a6b2; border-color: #00a6b2; }"
+    },
+    {
+      "name": "Discipline Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Raised charcoal card used for each discipline (We Nuoto, We Ballo).",
+      "html": "<article class=\"ds-card\"><img class=\"ds-card-img\" src=\"/assets/img/swim.jpg\" alt=\"\" /><div class=\"ds-card-body\"><h3 class=\"ds-card-title\"><span class=\"ds-accent\">We</span> Nuoto</h3><p class=\"ds-card-text\">Corsi in acqua aperti a tutti.</p></div></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; background: #262624; border-radius: 28px; overflow: hidden; font-family: Outfit, sans-serif; } .ds-card-img { width: 100%; height: 260px; object-fit: cover; } .ds-card-body { padding: 32px; display: flex; flex-direction: column; gap: 14px; } .ds-card-title { font-family: Kobe, sans-serif; font-weight: 800; font-size: 30px; margin: 0; color: #ffffff; } .ds-accent { color: #00a6b2; } .ds-card-text { font-size: 17px; color: rgba(255,255,255,.82); margin: 0; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "field-input",
+      "description": "Single-line form field on the near-black contact form.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field-label\" for=\"ds-nome\">Nome e cognome</label><input class=\"ds-field-input\" id=\"ds-nome\" type=\"text\" /></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 8px; font-family: Outfit, sans-serif; } .ds-field-label { font-size: 15px; font-weight: 400; color: #ffffff; } .ds-field-input { width: 100%; height: 52px; padding: 0 18px; background: #1d1d1b; color: #ffffff; border: 1px solid rgba(255,255,255,.28); border-radius: 14px; font-size: 17px; } .ds-field-input:focus { outline: 2px solid #00a6b2; outline-offset: 2px; }"
+    },
+    {
+      "name": "Fluidity Disc",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature abstract value icon: layered radial + conic gradients inside the same circular frame used for photographic value icons.",
+      "html": "<div class=\"ds-fluidity-disc\" aria-hidden=\"true\"></div>",
+      "css": ".ds-fluidity-disc { width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 28% 24%, #9be9ee 0, rgba(155,233,238,0) 32%), radial-gradient(circle at 74% 66%, #0b5f66 0, rgba(11,95,102,0) 46%), conic-gradient(from 40deg, #0b5f66, #00a6b2, #e6f4b0, #00a6b2, #0b5f66); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Shared Rhythm",
+    "overview": "Swimming and dance are both forms of rhythm and movement, and the system treats inclusion the same way: not a separate track bolted onto the brand, but the current everyone moves through together. The ground is a near-black charcoal stage that lets one color — Signal Teal — do all the talking; everything else is tonal (charcoal surfaces, three opacities of white) rather than additional hue. Display type is heavy and confident (Kobe, 700–900), set against body copy that stays deliberately light (Outfit, 300), so statements land with weight while explanations stay airy and easy to read at length.\n\nThe system's signature is asymmetric: hero and split photography sit in frames with one or two corners pulled into a deep organic curve while the others stay tight, echoing the brand's own \"fluidità\" value rather than defaulting to a uniform rounded-rectangle. UI chrome does the opposite — buttons are full pills, cards and the contact form share one consistent 28px radius — so the organic imagery and the disciplined interface read as two deliberately different vocabularies, not an inconsistency.\n\nThere are no shadows anywhere in the system. Depth comes from tonal contrast — near-black against lighter charcoal surfaces, white at three opacities, and a dark overlay dropped over the one full-bleed photographic moment (Claim) — never from elevation.",
+    "keyCharacteristics": [
+      "One accent, no exceptions: Signal Teal is the only hue in the system.",
+      "Heavy display type over light body type — a deliberate weight snap, not a mismatch.",
+      "Organic, asymmetric corners on photography; disciplined pill/28px corners on UI chrome.",
+      "Flat by construction — tonal layering stands in for shadows everywhere."
+    ],
+    "rules": [
+      { "name": "The Lone Signal Rule", "body": "Signal Teal is the only accent color in the system. A second accent hue is never introduced; new emphasis is expressed through weight, size, or the existing white opacities, not a new color.", "section": "colors" },
+      { "name": "The Weight Contrast Rule", "body": "Display-role type is never set below 700 weight; body-role type is never set above 400 weight. The gap between the two is the system's typographic voice.", "section": "typography" },
+      { "name": "The No-Shadow Rule", "body": "Never add a box-shadow to communicate elevation. Reach for a lighter tonal surface (Charcoal Surface) or an overlay instead.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep Signal Teal as the system's only accent color — new emphasis comes from weight, size, or white-opacity, not a new hue.",
+      "Do pair heavy display weight (700+) with light body weight (300); never settle on a mid-weight compromise.",
+      "Do give hero/split photography at least one deep, asymmetric corner radius — never let an image frame use four matching corners.",
+      "Do keep all buttons at full pill radius (999px), distinct from the 28px card/form radius."
+    ],
+    "donts": [
+      "Don't add box-shadow anywhere; depth is tonal (Near-Black → Charcoal Surface → overlay), never elevation-based.",
+      "Don't introduce a second or third accent color; this is deliberately a one-accent system.",
+      "Don't set body copy above 400 weight — the light/bold contrast is load-bearing for the system's voice.",
+      "Don't round photography corners symmetrically; that vocabulary belongs to UI chrome (buttons, cards, form), not to imagery."
+    ]
+  }
+}

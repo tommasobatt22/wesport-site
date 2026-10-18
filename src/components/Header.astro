@@ -1,0 +1,37 @@
+---
+---
+
+<header class="header">
+  <a href="#top" class="header__logo" aria-label="A.S.D. WE SPORT – Home">
+    <img src="/assets/img/logo.png" alt="WE Sport" />
+  </a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Apri menu">
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+  </button>
+  <nav class="nav" id="nav-menu" aria-label="Principale">
+    <a href="#about">Chi siamo</a>
+    <a href="#valori">Valori</a>
+    <a href="#discipline">Discipline</a>
+    <a href="#target">Per chi</a>
+    <a href="#contatti" class="btn btn--small">Iscriviti</a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('nav--open') ?? false;
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('nav--open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
