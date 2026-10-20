@@ -55,3 +55,4 @@ src/plugins/impeccable-live.client.ts
 
 # claude local
 .claude/settings.local.json
+.taste-skill/
