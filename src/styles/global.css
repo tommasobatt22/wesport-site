@@ -68,6 +68,7 @@
   --radius-card: 28px;
   --radius-field: 14px;
   --radius-nav: 24px;
+  --header-h: 80px;        /* aggiornata via JS in Header.astro */
 
   /* Rhythm: spacing.* dalla design.md. Solo i passi effettivamente ricorrenti;
      i valori "one-off" (14px, 20px, 40px, 48px, 64px, 112px...) restano letterali di proposito. */
@@ -80,6 +81,8 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-padding-top: var(--header-h); }
 
 body {
   margin: 0;
@@ -159,74 +162,33 @@ input, textarea, button { font-family: var(--font-body); }
 .link { font-weight: 500; color: var(--accent); }
 .link:hover { text-decoration: underline; }
 
-/* ---------- Onde decorative + effetto scroll ---------- */
-.wave {
-  position: absolute;
-  left: 50%;
-  margin-left: -880px;
-  width: 1760px;
-  height: 286px;
-  pointer-events: none;
-  z-index: -1;
-  stroke: var(--wave-color, #fff);
-  opacity: var(--wave-opacity, .25);
-}
-.wave--hero {
-  left: -60px;
-  bottom: -40px;
-  margin-left: 0;
-  width: 200px;
-  height: 520px;
-  opacity: 1;
-}
-
-/* Varianti di posizione/colore delle onde */
-.wave--about   { top: 20px;    --wave-opacity: .22; }
-.wave--values  { top: 38%;     --wave-color: var(--accent); --wave-opacity: .5; }
-.wave--disc    { top: -40px;   --wave-opacity: .2; }
-.wave--claim   { bottom: -50px; --wave-opacity: .55; z-index: auto; }
-.wave--target  { bottom: -60px; --wave-color: var(--accent); --wave-opacity: .45; }
-.wave--contact { top: 10px;    --wave-opacity: .2; }
-
-@keyframes wvX  { from { transform: translateX(-80px); } to { transform: translateX(80px); } }
-@keyframes wvXR { from { transform: translateX(80px); }  to { transform: translateX(-80px); } }
-@keyframes wvY  { from { transform: translateY(-40px) rotate(-2deg); } to { transform: translateY(40px) rotate(2deg); } }
-
-.wv { will-change: transform; }
-.wv-x  { animation: wvX  1s linear both; }
-.wv-xr { animation: wvXR 1s linear both; }
-.wv-y  { animation: wvY  1s linear both; }
-
-/* Il movimento segue lo scroll (browser con scroll-driven animations) */
-@supports (animation-timeline: view()) {
-  .wv {
-    animation-timeline: view();
-    animation-range: entry 0% exit 100%;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .wv { animation: none !important; }
-}
-
 /* ---------- Header ---------- */
 .header {
-  position: relative;
-  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   margin: 0 auto;
-  padding: var(--space-sm) var(--gutter);
+  background: rgba(29, 29, 27, .55);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
+  padding: 12px var(--gutter);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-xs) var(--space-md);
 }
-.header__logo img { height: 72px; width: auto; }
+.header__logo img { height: 56px; width: auto; }
 .nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 36px;
-  font-size: 16px;
+  gap: 10px 32px;
+  font-size: 15px;
   font-weight: 400;
 }
 
@@ -271,7 +233,7 @@ input, textarea, button { font-family: var(--font-body); }
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
-    background: var(--card);
+    background: rgba(29, 29, 27, .92);
     border-radius: 0 0 var(--radius-nav) var(--radius-nav);
     transition: max-height .3s ease, opacity .25s ease, transform .25s ease, padding .3s ease;
   }
@@ -308,23 +270,49 @@ input, textarea, button { font-family: var(--font-body); }
 .section__head { display: flex; flex-direction: column; gap: var(--space-xs); max-width: 640px; }
 
 /* ---------- Hero ---------- */
+/* Foto a schermo intero: passa sotto l'header in vetro */
 .hero {
   position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + var(--space-lg)) var(--gutter) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero__media { position: absolute; inset: 0; z-index: -1; margin: 0; }
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+  transform-origin: 50% 70%;
+  animation: hero-settle 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* Velo scuro, più denso al centro dove sta il testo */
+.hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 48% at 50% 50%, rgba(29, 29, 27, .7), rgba(29, 29, 27, .35) 70%, transparent),
+    linear-gradient(to top, rgba(29, 29, 27, .7), rgba(29, 29, 27, .4) 45%, rgba(29, 29, 27, .45));
+}
+.hero__intro {
+  width: 100%;
+  max-width: calc(var(--container) - 2 * var(--gutter));
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 64px;
-}
-.hero__text {
-  padding: var(--space-md) var(--gutter);
-  position: relative;
-  flex: 1 1 460px;
-  min-width: 0;
-  display: flex;
   flex-direction: column;
-  gap: 28px;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
 }
+.hero__heading { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+/* Alone scuro morbido: tiene leggibile il testo sopra le zone chiare della foto */
+.hero__heading, .hero__lead { text-shadow: 0 2px 18px rgba(29, 29, 27, .7); }
 .hero__title {
   font-weight: 800;
   font-size: 76px;
@@ -332,39 +320,28 @@ input, textarea, button { font-family: var(--font-body); }
   letter-spacing: -.02em;
 }
 .hero__title .outline { -webkit-text-stroke-width: 2px; }
-.hero__lead { max-width: 520px; font-size: 20px; color: rgba(255, 255, 255, .82); }
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
-.hero__media {
-  position: relative;
-  flex: 1 1 40%;
-  min-width: 0;
-  height: calc(100vh - 120px);
-  margin-left: -24px;
-  overflow: hidden;
+.hero__body {
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
 }
-/* Il bordo ondulato tra testo e foto: clipPath definito in Hero.astro */
-.hero__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  clip-path: url(#hero-wave-v);
-  animation: hero-media-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+.hero__lead { font-size: 20px; color: rgba(255, 255, 255, .9); }
+.hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xs); }
+/* La foto si assesta lentamente all'apertura, senza mai sparire */
+@keyframes hero-settle {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
 }
-@keyframes hero-media-in {
-  from { opacity: 0; transform: scale(1.07); }
-  to { opacity: 1; transform: scale(1); }
-}
-.hero__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-@media (max-width: 1020px) {
-  .hero { gap: 40px; }
-  .hero__media { margin-left: 0; height: 420px; }
-  .hero__media img { clip-path: url(#hero-wave-h) }
+@media (max-width: 700px) {
+  .hero__media img { object-position: 38% 62%; }
+  .hero__media::after {
+    background: rgba(29, 29, 27, .72);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__media img { clip-path: url(#hero-wave-v-still); animation: none; }
-}
-@media (prefers-reduced-motion: reduce) and (max-width: 1020px) {
-  .hero__media img { clip-path: url(#hero-wave-h-still); }
+  .hero__media img { animation: none; }
 }
 
 /* ---------- Blocchi testo + immagine ---------- */
@@ -382,8 +359,8 @@ input, textarea, button { font-family: var(--font-body); }
   overflow: hidden;
 }
 .split__media img { width: 100%; height: 100%; object-fit: cover; }
-.split__media--about  { height: 420px; border-radius: 24px 24px 220px 24px; }
-.split__media--target { height: 460px; border-radius: 220px 24px 24px 24px; }
+.split__media--about  { height: 420px; border-radius: 24px; }
+.split__media--target { height: 460px; border-radius: 24px; }
 .split__media--target img { object-position: center 40%; }
 
 /* ---------- Valori ---------- */
@@ -544,7 +521,7 @@ input, textarea, button { font-family: var(--font-body); }
   body { font-size: 17px; }
   .section { padding-top: 64px; padding-bottom: 64px; }
   .hero__title { font-size: 44px; }
-  .hero__media { height: 340px; }
+  .hero { padding-bottom: var(--space-lg); }
   .title { font-size: 36px; }
   .title--md { font-size: 32px; }
   .claim__inner { font-size: 36px; padding-top: 72px; padding-bottom: 72px; }
