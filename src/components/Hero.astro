@@ -1,14 +1,17 @@
 <section id="top" class="hero">
   <figure class="hero__media">
-    <img src="/assets/img/hero.jpg" alt="Un lago dall'acqua turchese con un pontile e corsie galleggianti, in una giornata di sole" width="3296" height="1864" fetchpriority="high" />
+    <video autoplay muted loop playsinline poster="/assets/img/hero.jpg" aria-hidden="true">
+      <source src="/assets/video/we-sport-home-video-mobile.mp4" media="(max-width: 700px)" type="video/mp4" />
+      <source src="/assets/video/we-sport-home-video.mp4" type="video/mp4" />
+    </video>
   </figure>
   <div class="hero__intro">
     <div class="hero__heading">
-      <div class="eyebrow">A.S.D. WE SPORT · Castelfranco Veneto</div>
-      <h1 class="hero__title">Lo sport,<br /><span class="outline">insieme.</span></h1>
+      <div class="eyebrow text-sm">A.S.D. WE SPORT · Castelfranco Veneto</div>
+      <h1 class="hero__title text-5xl">Together,<br /><span class="outline">we move.</span></h1>
     </div>
     <div class="hero__body">
-      <p class="hero__lead">Una nuova prospettiva per la città: nuoto e ballo, per persone normodotate o con diverse abilità, all'insegna dell'inclusione e della formazione personale.</p>
+      <p class="hero__lead text-xl">Lo sport per tutti, senza barriere</p>
       <div class="hero__actions">
         <a href="#discipline" class="btn">Scopri le discipline</a>
         <a href="#contatti" class="btn btn--ghost">Contattaci</a>
@@ -16,3 +19,11 @@
     </div>
   </div>
 </section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('.hero__media video');
+  if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.removeAttribute('autoplay');
+    video.pause();
+  }
+</script>

@@ -77,6 +77,19 @@
   --space-md: 32px;
   --space-lg: 56px;
   --space-xl: 96px;
+
+  /* Scala tipografica fluida: clamp(min, min + Nvw, max). N è calibrato perché
+     il valore raggiunga max attorno alla larghezza di --container (1280px). */
+  --text-xs: clamp(0.75rem, 0.75rem + 0.08vw, 0.8125rem);
+  --text-sm: clamp(0.8125rem, 0.8125rem + 0.16vw, 0.9375rem);
+  --text-base: clamp(1.0625rem, 1.0625rem + 0.08vw, 1.125rem);
+  --text-md: clamp(1.125rem, 1.125rem + 0.16vw, 1.25rem);
+  --text-lg: clamp(1.625rem, 1.625rem + 0.31vw, 1.875rem);
+  --text-xl: clamp(1.75rem, 1.75rem + 0.47vw, 2.125rem);
+  --text-2xl: clamp(2rem, 2rem + 0.94vw, 2.75rem);
+  --text-3xl: clamp(2.25rem, 2.25rem + 1.25vw, 3.25rem);
+  --text-4xl: clamp(2.25rem, 2.25rem + 1.56vw, 3.5rem);
+  --text-5xl: clamp(2.75rem, 2.75rem + 2.5vw, 4.75rem);
 }
 
 /* ---------- Base ---------- */
@@ -90,7 +103,6 @@ body {
   color: var(--text);
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 18px;
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -98,11 +110,11 @@ body {
 img { display: block; max-width: 100%; }
 a { color: var(--text); text-decoration: none; }
 a:hover { color: var(--accent); }
-p { margin: 0; color: var(--text-soft); }
+p { margin: 0; color: var(--text-soft); font-weight: 400; }
 h1, h2, h3 { margin: 0; font-family: var(--font-title); }
 address { font-style: normal; }
 input, textarea, button { font-family: var(--font-body); }
-
+b { font-weight: 700; }
 .page {
   position: relative;
   isolation: isolate;       /* le onde (z-index -1) restano sopra lo sfondo */
@@ -120,19 +132,28 @@ input, textarea, button { font-family: var(--font-body); }
 .eyebrow {
   font-family: var(--font-title);
   font-weight: 600;
-  font-size: 14px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--accent);
 }
-.eyebrow--sm { font-size: 13px; }
 
 .title {
   font-weight: 800;
-  font-size: 52px;
   line-height: 1.05;
 }
-.title--md { font-size: 44px; line-height: 1.1; }
+.title--md { line-height: 1.1; }
+
+/* ---------- Classi di grandezza testo (fluide) ---------- */
+.text-xs  { font-size: var(--text-xs); }
+.text-sm  { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-md  { font-size: var(--text-md); }
+.text-lg  { font-size: var(--text-lg); }
+.text-xl  { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
 
 /* ---------- Bottoni e link ---------- */
 .btn {
@@ -157,7 +178,6 @@ input, textarea, button { font-family: var(--font-body); }
   min-height: 52px;
   padding: 0 36px;
   border: 0;
-  font-size: 17px;
   cursor: pointer;
 }
 .link { font-weight: 500; color: var(--accent); }
@@ -191,7 +211,6 @@ input, textarea, button { font-family: var(--font-body); }
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 32px;
-  font-size: 15px;
   font-weight: 400;
 }
 
@@ -270,7 +289,7 @@ input, textarea, button { font-family: var(--font-body); }
   gap: var(--space-lg);
 }
 .section--contact { align-items: stretch; padding-bottom: 112px; }
-.section__head { display: flex; flex-direction: column; gap: var(--space-xs); max-width: 640px; }
+.section__head { display: flex; flex-direction: column; gap: var(--space-xs); }
 
 /* ---------- Hero ---------- */
 /* Foto a schermo intero: passa sotto l'header in vetro */
@@ -286,7 +305,7 @@ input, textarea, button { font-family: var(--font-body); }
   overflow: hidden;
 }
 .hero__media { position: absolute; inset: 0; z-index: -1; margin: 0; }
-.hero__media img {
+.hero__media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -310,7 +329,7 @@ input, textarea, button { font-family: var(--font-body); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   text-align: center;
 }
 .hero__heading { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
@@ -318,7 +337,6 @@ input, textarea, button { font-family: var(--font-body); }
 .hero__heading, .hero__lead { text-shadow: 0 2px 18px rgba(29, 29, 27, .7); }
 .hero__title {
   font-weight: 800;
-  font-size: 76px;
   line-height: 1.02;
   letter-spacing: -.02em;
 }
@@ -330,7 +348,7 @@ input, textarea, button { font-family: var(--font-body); }
   align-items: center;
   gap: 28px;
 }
-.hero__lead { font-size: 20px; color: rgba(255, 255, 255, .9); }
+.hero__lead { color: rgba(255, 255, 255, .9); line-height: 1.2; }
 .hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xs); }
 /* La foto si assesta lentamente all'apertura, senza mai sparire */
 @keyframes hero-settle {
@@ -338,13 +356,12 @@ input, textarea, button { font-family: var(--font-body); }
   to { transform: scale(1); }
 }
 @media (max-width: 700px) {
-  .hero__media img { object-position: 38% 62%; }
   .hero__media::after {
     background: rgba(29, 29, 27, .72);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__media img { animation: none; }
+  .hero__media video { animation: none; }
 }
 
 /* ---------- Blocchi testo + immagine ---------- */
@@ -363,8 +380,9 @@ input, textarea, button { font-family: var(--font-body); }
 }
 .split__media img { width: 100%; height: 100%; object-fit: cover; }
 .split__media--about  { height: 420px; border-radius: 24px; }
-.split__media--target { height: 460px; border-radius: 24px; }
-.split__media--target img { object-position: center 40%; }
+
+/* ---------- Missione ---------- */
+.mission__text { line-height: 1.6; }
 
 /* ---------- Valori ---------- */
 .values { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px 40px; }
@@ -377,8 +395,8 @@ input, textarea, button { font-family: var(--font-body); }
   text-align: center;
   gap: 20px;
 }
-.value p { font-size: 17px; color: rgba(255, 255, 255, .82); }
-.value__title { font-weight: 800; font-size: 34px; }
+.value p { color: rgba(255, 255, 255, .82); }
+.value__title { font-weight: 800; }
 .value__title .outline { -webkit-text-stroke-width: 1.2px; }
 .value__img {
   width: 220px;
@@ -394,7 +412,7 @@ input, textarea, button { font-family: var(--font-body); }
     conic-gradient(from 40deg, #0b5f66, var(--accent), #e6f4b0, var(--accent), #0b5f66);
 }
 
-/* ---------- Discipline ---------- */
+/* ---------- Attività ---------- */
 .cards { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 .card {
   flex: 1 1 340px;
@@ -405,17 +423,39 @@ input, textarea, button { font-family: var(--font-body); }
   border-radius: var(--radius-card);
   overflow: hidden;
 }
-.card p { font-size: 17px; color: rgba(255, 255, 255, .82); }
+.card p { color: rgba(255, 255, 255, .82); }
 .card__img { width: 100%; height: 260px; object-fit: cover; }
 .card__img--dance { object-position: center 35%; }
 .card__body { padding: var(--space-md); display: flex; flex-direction: column; gap: 14px; }
-.card__title { font-weight: 800; font-size: 30px; }
+.card__title { font-weight: 800; }
 .card--dashed {
   padding: var(--space-md);
   justify-content: center;
   gap: 14px;
   background: transparent;
   border: 1.5px dashed rgba(255, 255, 255, .35);
+}
+
+/* Tablet/mobile: carosello scrollabile con avanzamento automatico */
+@media (max-width: 900px) {
+  .cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+  }
+  .cards::-webkit-scrollbar { display: none; }
+  .card {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+}
+@media (max-width: 560px) {
+  .card { flex: 0 0 86%; }
 }
 
 /* ---------- Claim ---------- */
@@ -432,35 +472,33 @@ input, textarea, button { font-family: var(--font-body); }
   justify-content: center;
   gap: var(--space-xs) 64px;
   font-family: var(--font-title);
-  font-size: 56px;
   line-height: 1.1;
 }
 .claim__inner .accent { font-weight: 800; }
 .claim__inner .outline { -webkit-text-stroke-width: 1.6px; }
 
-/* ---------- Per chi ---------- */
-.list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* ---------- Sponsor ---------- */
+.sponsors {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  font-size: 19px;
+  flex-wrap: wrap;
+  gap: var(--space-md);
 }
-.list li { display: flex; align-items: center; gap: 14px; }
-.list li::before {
-  content: "";
-  flex: none;
-  width: 14px;
-  height: 14px;
+.sponsors__item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  height: 170px;
+  padding: var(--space-md);
+  background: var(--card);
   border-radius: 50%;
-  background: var(--accent);
 }
+.sponsors__item img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
 
 /* ---------- Contatti e modulo ---------- */
 .contact__info { flex-basis: 380px; }
-.contact__list { display: flex; flex-direction: column; gap: 6px; font-size: 17px; color: var(--text-soft); }
+.contact__list { display: flex; flex-direction: column; gap: 6px; color: var(--text-soft); }
 .form {
   flex: 1 1 440px;
   min-width: 0;
@@ -472,7 +510,7 @@ input, textarea, button { font-family: var(--font-body); }
   border-radius: var(--radius-card);
 }
 .field { display: flex; flex-direction: column; gap: 8px; }
-.field label { font-size: 15px; font-weight: 400; }
+.field label { font-weight: 400; }
 .field input,
 .field textarea {
   width: 100%;
@@ -480,7 +518,6 @@ input, textarea, button { font-family: var(--font-body); }
   color: var(--text);
   border: 1px solid var(--line);
   border-radius: var(--radius-field);
-  font-size: 17px;
 }
 .field input { height: 52px; padding: 0 18px; }
 .field textarea { padding: 14px 18px; resize: vertical; }
@@ -498,14 +535,12 @@ input, textarea, button { font-family: var(--font-body); }
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm) 48px;
-  font-size: 15px;
   color: var(--text-muted);
 }
 .footer__inner img { height: 56px; width: auto; }
 .footer__name {
   font-family: var(--font-title);
   font-weight: 600;
-  font-size: 14px;
   letter-spacing: .08em;
   color: var(--text);
 }
@@ -514,20 +549,20 @@ input, textarea, button { font-family: var(--font-body); }
 .footer__nav a:hover { color: var(--accent); }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
-  .hero__title { font-size: 56px; }
-  .title { font-size: 42px; }
-  .claim__inner { font-size: 44px; }
-}
+/* Le dimensioni dei testi ora scalano via clamp() (vedi --text-* e .text-*):
+   qui restano solo gli adattamenti di layout non tipografici. */
 @media (max-width: 560px) {
   :root { --gutter: 20px; }
-  body { font-size: 17px; }
   .section { padding-top: 64px; padding-bottom: 64px; }
-  .hero__title { font-size: 44px; }
   .hero { padding-bottom: var(--space-lg); }
-  .title { font-size: 36px; }
-  .title--md { font-size: 32px; }
-  .claim__inner { font-size: 36px; padding-top: 72px; padding-bottom: 72px; }
-  .split__media--about, .split__media--target { height: 300px; }
+  .claim__inner { padding-top: 72px; padding-bottom: 72px; }
+  .split__media--about { height: 300px; }
   .form { padding: var(--space-sm); }
+}
+
+
+.link-icon{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }

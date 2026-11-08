@@ -1,0 +1,79 @@
+---
+import Card from './cards/Card.astro';
+import CardDashed from './cards/CardDashed.astro';
+---
+
+<section id="discipline" class="section section--column section--gap-lg">
+  <h2 class="title text-3xl">Attività</h2>
+  <div class="cards" data-carousel>
+    <Card
+      name="Swim"
+      description="Corsi in acqua aperti a tutti, per persone normodotate o con diverse abilità."
+      image="/assets/img/swim.jpg"
+      imageAlt="Nuotatore in azione durante una bracciata"
+    />
+    <Card
+      name="Dance"
+      description="Il ballo come occasione di incontro, movimento e crescita personale."
+      image="/assets/img/dance.jpg"
+      imageAlt="Coppie che ballano"
+      imageModifier="dance"
+    />
+    <Card
+      name="Train"
+      description="Un viaggio speciale tra movimento, benessere e consapevolezza del proprio corpo"
+      image="/assets/img/train.jpg"
+      imageAlt="Persona che si allena in palestra"
+      imageModifier="train"
+    />
+    <CardDashed
+      eyebrow="Identità dinamica"
+      title="Altri sport in arrivo"
+      description="Il marchio nasce per espandersi: ogni nuova disciplina avrà la propria declinazione del logo, mantenendo i valori della società."
+    />
+  </div>
+</section>
+
+<script>
+  const CAROUSEL_BREAKPOINT = '(max-width: 920px)';
+  const AUTOPLAY_DELAY = 6000;
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((track) => {
+    const mql = window.matchMedia(CAROUSEL_BREAKPOINT);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    let resumeTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const slides = () => Array.from(track.children) as HTMLElement[];
+
+    const goToNext = () => {
+      const items = slides();
+      if (!items.length) return;
+      const currentIndex = items.findIndex((el) => el.offsetLeft >= track.scrollLeft - 20);
+      const next = items[currentIndex + 1] ?? items[0];
+      track.scrollTo({ left: next.offsetLeft, behavior: 'smooth' });
+    };
+
+    const stop = () => {
+      clearInterval(timer);
+      timer = undefined;
+    };
+
+    const start = () => {
+      if (timer || reduceMotion || !mql.matches) return;
+      timer = setInterval(goToNext, AUTOPLAY_DELAY);
+    };
+
+    const pauseAndResume = () => {
+      stop();
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(start, AUTOPLAY_DELAY);
+    };
+
+    track.addEventListener('pointerdown', pauseAndResume);
+    track.addEventListener('touchstart', pauseAndResume, { passive: true });
+    mql.addEventListener('change', (event) => (event.matches ? start() : stop()));
+
+    start();
+  });
+</script>

@@ -1,0 +1,39 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+const sponsorsDir = path.join(process.cwd(), 'public/assets/img/sponsor');
+const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.svg', '.webp']);
+
+const sponsors = fs
+  .readdirSync(sponsorsDir)
+  .filter((file) => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
+  .sort()
+  .map((file) => {
+    const base = path.basename(file, path.extname(file));
+    const name =
+      base
+        .replace(/^logo[-_]?/i, '')
+        .replace(/[-_]?logo$/i, '')
+        .split(/[-_]+/)
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ') || base;
+    return { src: `/assets/img/sponsor/${file}`, name };
+  });
+---
+
+<section id="sponsor" class="section section--column">
+  <div class="section__head">
+    <div class="eyebrow text-sm">Partner</div>
+    <h2 class="title title--md text-2xl">I nostri sponsor</h2>
+    <p class="text-base">Le attività che sostengono la nostra visione, rendendo possibile ogni nostro progetto.</p>
+  </div>
+  <div class="sponsors">
+    {sponsors.map((sponsor) => (
+      <div class="sponsors__item">
+        <img src={sponsor.src} alt={sponsor.name} loading="lazy" />
+      </div>
+    ))}
+  </div>
+</section>
