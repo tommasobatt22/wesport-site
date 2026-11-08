@@ -1,0 +1,25 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  imageModifier?: string;
+  href?: string;
+}
+
+const { name, description, image, imageAlt, imageModifier, href = '#contatti' } = Astro.props;
+---
+
+<article class="card">
+  <img
+    class={`card__img${imageModifier ? ` card__img--${imageModifier}` : ''}`}
+    src={image}
+    alt={imageAlt}
+  />
+  <div class="card__body">
+    <h3 class="card__title text-lg"><span class="accent">We</span> {name}</h3>
+    <p class="text-base">{description}</p>
+    <a href={href} class="link">Scopri di più →</a>
+  </div>
+</article>
