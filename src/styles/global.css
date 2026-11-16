@@ -254,7 +254,7 @@ b { font-weight: 700; }
     pointer-events: none;
     background: rgba(29, 29, 27, .92);
     border-radius: 0 0 var(--radius-nav) var(--radius-nav);
-    transition: max-height .3s ease, opacity .25s ease, transform .25s ease, padding .3s ease;
+    transition: max-height .3s ease, opacity .3,5s ease, transform .25s ease, padding .3s ease;
   }
   .nav.nav--open {
     max-height: 400px;
@@ -286,6 +286,8 @@ b { font-weight: 700; }
   gap: var(--space-lg);
 }
 .section--contact { align-items: stretch; padding-bottom: 112px; }
+/* Prima sezione di una pagina senza hero: scosta il contenuto dall'header fisso in vetro */
+.section--page-head { padding-top: calc(var(--header-h) + var(--space-lg)); }
 .section__head { display: flex; flex-direction: column; gap: var(--space-xs); }
 
 /* ---------- Hero ---------- */
@@ -377,37 +379,12 @@ b { font-weight: 700; }
 }
 .split__media img { width: 100%; height: 100%; object-fit: cover; }
 .split__media--about  { height: 420px; border-radius: 24px; }
+.prose { display: flex; flex-direction: column; gap: var(--space-sm); }
 
 /* ---------- Missione ---------- */
+.mission__body { display: flex; flex-direction: column; gap: var(--space-sm); }
 .mission__text { line-height: 1.6; }
 
-/* ---------- Valori ---------- */
-.values { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px 40px; }
-.value {
-  flex: 1 1 300px;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 20px;
-}
-.value p { color: rgba(255, 255, 255, .82); }
-.value__title { font-weight: 800; }
-.value__title .outline { -webkit-text-stroke-width: 1.2px; }
-.value__img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.value__img img { width: 100%; height: 100%; object-fit: cover; }
-.value__img--fluid {
-  background:
-    radial-gradient(circle at 28% 24%, #9be9ee 0, rgba(155, 233, 238, 0) 32%),
-    radial-gradient(circle at 74% 66%, #0b5f66 0, rgba(11, 95, 102, 0) 46%),
-    conic-gradient(from 40deg, #0b5f66, var(--accent), #e6f4b0, var(--accent), #0b5f66);
-}
 
 /* ---------- Attività ---------- */
 .cards { display: flex; flex-wrap: wrap; gap: var(--space-md); }
@@ -455,25 +432,6 @@ b { font-weight: 700; }
   .card { flex: 0 0 86%; }
 }
 
-/* ---------- Claim ---------- */
-.claim { position: relative; overflow: hidden; margin: 48px 0; }
-.claim__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.claim__overlay { position: absolute; inset: 0; background: rgba(29, 29, 27, .62); }
-.claim__inner {
-  position: relative;
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 112px var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-xs) 64px;
-  font-family: var(--font-title);
-  line-height: 1.1;
-}
-.claim__inner .accent { font-weight: 800; }
-.claim__inner .outline { -webkit-text-stroke-width: 1.6px; }
-
 /* ---------- Sponsor ---------- */
 .sponsors {
   display: flex;
@@ -492,6 +450,22 @@ b { font-weight: 700; }
   border-radius: 50%;
 }
 .sponsors__item img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+/* ---------- Contatti (CTA in home) ---------- */
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--card);
+  border-radius: var(--radius-card);
+}
+.cta__text { display: flex; flex-direction: column; gap: var(--space-xs); max-width: 560px; }
+@media (max-width: 560px) {
+  .cta { flex-direction: column; align-items: flex-start; padding: var(--space-md); }
+}
 
 /* ---------- Contatti e modulo ---------- */
 .contact__info { flex-basis: 380px; }
@@ -552,7 +526,6 @@ b { font-weight: 700; }
   :root { --gutter: 20px; }
   .section { padding-top: 64px; padding-bottom: 64px; }
   .hero { padding-bottom: var(--space-lg); }
-  .claim__inner { padding-top: 72px; padding-bottom: 72px; }
   .split__media--about { height: 300px; }
   .form { padding: var(--space-sm); }
 }
